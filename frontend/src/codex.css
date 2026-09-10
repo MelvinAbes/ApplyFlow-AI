@@ -1,0 +1,16 @@
+.login-link {
+  align-items: center;
+  color: var(--forest);
+  display: flex;
+  font-size: 10px;
+  font-weight: 700;
+  gap: 4px;
+  margin-top: 9px;
+  width: max-content;
+}
+
+.connection-error {
+  color: var(--danger) !important;
+  display: block !important;
+  margin-top: 7px;
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Generic application widgets</title>
+  </head>
+  <body>
+    <form id="application">
+      <label for="email">Email address</label>
+      <input id="email" type="email" required>
+
+      <label for="start-date">Available from</label>
+      <input id="start-date" type="date" required>
+
+      <label for="office">Office</label>
+      <select id="office" required>
+        <option value="">Choose</option>
+        <option value="berlin">Berlin</option>
+        <option value="hamburg">Hamburg</option>
+      </select>
+
+      <fieldset>
+        <legend>Work arrangement</legend>
+        <label><input type="radio" name="arrangement" value="hybrid" required> Hybrid</label>
+        <label><input type="radio" name="arrangement" value="onsite"> On site</label>
+      </fieldset>
+
+      <label><input id="updates" type="checkbox"> Send application updates</label>
+
+      <label for="motivation">Motivation</label>
+      <textarea id="motivation" maxlength="400"></textarea>
+
+      <label id="language-label" for="language">Working language</label>
+      <input
+        id="language"
+        role="combobox"
+        aria-labelledby="language-label"
+        aria-controls="language-options"
+        aria-expanded="false"
+        autocomplete="off"
+        required
+      >
+      <div id="language-options" role="listbox" hidden>
+        <button type="button" role="option">English</button>
+        <button type="button" role="option">German</button>
+      </div>
+    </form>
+    <script>
+      const combo = document.querySelector('#language')
+      const listbox = document.querySelector('#language-options')
+      const show = () => {
+        listbox.hidden = false
+        combo.setAttribute('aria-expanded', 'true')
+      }
+      const hide = () => {
+        listbox.hidden = true
+        combo.setAttribute('aria-expanded', 'false')
+      }
+      combo.addEventListener('click', show)
+      combo.addEventListener('input', show)
+      combo.addEventListener('keydown', event => {
+        if (event.key === 'Escape') hide()
+      })
+      listbox.querySelectorAll('[role="option"]').forEach(option => {
+        option.addEventListener('click', () => {
+          combo.value = option.textContent.trim()
+          combo.dispatchEvent(new Event('change', { bubbles: true }))
+          hide()
+        })
+      })
+    </script>
+  </body>
+</html>

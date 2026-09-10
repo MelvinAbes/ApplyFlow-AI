@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Local application fixture</title></head>
+<body>
+  <form id="application-form">
+    <label for="first">First name</label><input id="first" required>
+    <label for="last">Last name</label><input id="last" required>
+    <label for="email">Email</label><input id="email" type="email" required>
+    <label for="phone">Mobile</label><input id="phone" type="tel" required>
+    <label for="university">University</label><input id="university" required>
+    <label for="linkedin">LinkedIn Profile</label><input id="linkedin" type="url" required>
+    <label for="resume">Resume upload</label><input id="resume" type="file" required>
+    <label for="authorization">Are you legally authorized to work in Germany?</label>
+    <select id="authorization" required><option value="">Choose</option><option>Yes</option><option>No</option></select>
+    <label for="start">Available start date</label><input id="start" type="date" required>
+    <label for="motivation">Why are you interested in this role?</label>
+    <textarea id="motivation" maxlength="600" required></textarea>
+    <button type="submit">Submit application</button>
+  </form>
+  <div id="success" hidden>Application received</div>
+  <script>
+    document.querySelector('form').addEventListener('submit', event => {
+      event.preventDefault(); event.target.hidden = true; document.querySelector('#success').hidden = false;
+    });
+  </script>
+</body>
+</html>

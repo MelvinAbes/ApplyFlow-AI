@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><title>Dynamic application action</title></head>
+  <body>
+    <form id="application" onsubmit="window.submitCount=(window.submitCount||0)+1; event.preventDefault()">
+      <label for="first-name">First name</label>
+      <input id="first-name" name="first_name" required>
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required>
+
+      <label for="availability">Available for this role?</label>
+      <select id="availability" name="availability" required>
+        <option value="">Choose</option>
+        <option>Yes</option>
+        <option>No</option>
+      </select>
+
+      <button id="submit-application" type="submit" disabled>Bewerbung einreichen</button>
+    </form>
+    <script>
+      const form = document.querySelector('#application');
+      const submit = document.querySelector('#submit-application');
+      const updateAction = () => { submit.disabled = !form.checkValidity(); };
+      form.addEventListener('input', updateAction);
+      form.addEventListener('change', updateAction);
+    </script>
+  </body>
+</html>

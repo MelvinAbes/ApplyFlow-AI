@@ -1,0 +1,7 @@
+.review-field.requires-verification {
+  border-left: 3px solid #8ab0c7;
+}
+
+.risk-label.verification {
+  color: var(--blue);
+}

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>Bewerbung für Cloud Software Engineer</title>
+  </head>
+  <body>
+    <form id="deloitte-application">
+      <section>
+        <h2 id="resume-label">Lebenslauf</h2>
+        <input
+          id="resume"
+          name="resume"
+          type="file"
+          accept=".pdf,.doc,.docx"
+          aria-labelledby="resume-label"
+          required
+          style="display: none"
+        >
+        <span id="resume-filename"></span>
+      </section>
+
+      <fieldset>
+        <legend>Kontaktinformationen</legend>
+        <div class="form-field">
+          <span id="first-name-label">Vorname</span>
+          <input id="first-name" name="first_name" aria-labelledby="first-name-label" required>
+        </div>
+        <div class="form-field">
+          <span id="last-name-label">Nachname</span>
+          <input id="last-name" name="last_name" aria-labelledby="last-name-label" required>
+        </div>
+        <div class="form-field">
+          <span id="phone-label">Telefon</span>
+          <input id="phone" name="phone" aria-labelledby="phone-label" required>
+        </div>
+        <div class="form-field">
+          <span id="address-label">Straße und Hausnummer</span>
+          <input id="address" name="address" aria-labelledby="address-label" required>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Weitere Angaben</legend>
+        <div class="form-field">
+          <span id="birth-label">Geburtsdatum</span>
+          <input
+            id="birth-date"
+            name="birth_date"
+            role="combobox"
+            aria-haspopup="dialog"
+            aria-label="TT.MM.JJJJ"
+            aria-labelledby="birth-label"
+            aria-required="true"
+            readonly
+          >
+          <div id="birth-dialog" role="dialog" aria-label="Datum auswählen" hidden>
+            <button type="button" aria-label="Vorheriges Jahr">&lt;&lt;</button>
+            <button type="button" aria-label="Vorheriger Monat">&lt;</button>
+            <button type="button" aria-label="Nächster Monat">&gt;</button>
+            <button type="button" aria-label="Nächstes Jahr">&gt;&gt;</button>
+            <div role="grid" aria-label="Kalender"></div>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <span id="location-label">Standortwahl Priorität 1</span>
+          <input
+            id="location"
+            name="location"
+            role="combobox"
+            aria-labelledby="location-label"
+            aria-controls="location-options"
+            aria-expanded="false"
+            autocomplete="off"
+            required
+          >
+          <div id="location-options" role="listbox" hidden>
+            <div role="option">Berlin</div>
+            <div role="option">Frankfurt</div>
+            <div role="option">München</div>
+          </div>
+        </div>
+
+        <div role="radiogroup" aria-labelledby="other-roles-label">
+          <p id="other-roles-label">Dürfen wir dich auch für weitere offene Stellen prüfen?</p>
+          <label><input type="radio" name="other_roles" value="more" required> Ja, weitere offene Stellen</label>
+          <label><input type="radio" name="other_roles" value="only"> Nein, nur die beworbene Stelle</label>
+        </div>
+
+        <label>
+          <input id="save-answers" name="save_answers" type="checkbox" checked>
+          Meine Antworten für zukünftige Anwendungen speichern
+        </label>
+
+        <div class="grid-module_col field-3Ez-x">
+          <label id="attachments-label">
+            Upload der Zeugnisse (verpflichtend für Ausbildung und Duales Studium)
+          </label>
+          <span class="file-upload-Your_Profile_q_furtherattachments">
+            <input id="attachments" type="file" accept=".pdf,.doc,.docx" style="display: none">
+          </span>
+        </div>
+      </fieldset>
+
+      <button type="submit">Bewerbung absenden</button>
+    </form>
+
+    <script>
+      const resumeInput = document.querySelector('#resume')
+      resumeInput.addEventListener('change', () => {
+        document.querySelector('#resume-filename').textContent =
+          resumeInput.files[0]?.name || ''
+      })
+      const birthDate = document.querySelector('#birth-date')
+      const birthDialog = document.querySelector('#birth-dialog')
+      const birthGrid = birthDialog.querySelector('[role="grid"]')
+      const calendarView = new Date()
+      calendarView.setDate(1)
+      const isoDate = (year, month, day) => [
+        year,
+        String(month + 1).padStart(2, '0'),
+        String(day).padStart(2, '0'),
+      ].join('-')
+      const renderCalendar = () => {
+        birthGrid.replaceChildren()
+        const dayCount = new Date(
+          calendarView.getFullYear(),
+          calendarView.getMonth() + 1,
+          0,
+        ).getDate()
+        for (let day = 1; day <= dayCount; day += 1) {
+          const cell = document.createElement('div')
+          cell.setAttribute('role', 'gridcell')
+          cell.setAttribute(
+            'title',
+            isoDate(calendarView.getFullYear(), calendarView.getMonth(), day),
+          )
+          const button = document.createElement('button')
+          button.type = 'button'
+          button.setAttribute('role', 'button')
+          button.textContent = String(day)
+          button.addEventListener('click', () => {
+            birthDate.value = [
+              String(day).padStart(2, '0'),
+              String(calendarView.getMonth() + 1).padStart(2, '0'),
+              calendarView.getFullYear(),
+            ].join('.')
+            birthDate.dispatchEvent(new Event('change', { bubbles: true }))
+            birthDialog.hidden = true
+          })
+          cell.append(button)
+          birthGrid.append(cell)
+        }
+      }
+      const openCalendar = () => {
+        birthDialog.hidden = false
+        renderCalendar()
+      }
+      birthDate.addEventListener('click', openCalendar)
+      const moveCalendar = (years, months) => {
+        calendarView.setFullYear(calendarView.getFullYear() + years)
+        calendarView.setMonth(calendarView.getMonth() + months)
+        renderCalendar()
+      }
+      birthDialog.querySelector('[aria-label="Vorheriges Jahr"]').addEventListener('click', () => moveCalendar(-1, 0))
+      birthDialog.querySelector('[aria-label="Nächstes Jahr"]').addEventListener('click', () => moveCalendar(1, 0))
+      birthDialog.querySelector('[aria-label="Vorheriger Monat"]').addEventListener('click', () => moveCalendar(0, -1))
+      birthDialog.querySelector('[aria-label="Nächster Monat"]').addEventListener('click', () => moveCalendar(0, 1))
+
+      const combo = document.querySelector('#location')
+      const listbox = document.querySelector('#location-options')
+      const showOptions = () => {
+        listbox.hidden = false
+        combo.setAttribute('aria-expanded', 'true')
+      }
+      const hideOptions = () => {
+        listbox.hidden = true
+        combo.setAttribute('aria-expanded', 'false')
+      }
+      combo.addEventListener('click', showOptions)
+      combo.addEventListener('input', showOptions)
+      combo.addEventListener('keydown', event => {
+        if (event.key === 'Escape') hideOptions()
+      })
+      listbox.querySelectorAll('[role="option"]').forEach(option => {
+        option.addEventListener('click', () => {
+          combo.value = option.textContent.trim()
+          combo.dispatchEvent(new Event('change', { bubbles: true }))
+          hideOptions()
+        })
+      })
+    </script>
+  </body>
+</html>

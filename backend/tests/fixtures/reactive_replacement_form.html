@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <form id="application-form">
+      <label for="postal-code">Postal code</label>
+      <input
+        id="postal-code"
+        name="postal-code"
+        required
+        oninput="this.setAttribute('aria-invalid', 'true')"
+      >
+
+      <label for="preferred-location">Preferred location</label>
+      <input id="preferred-location" name="preferred-location" value="Berlin" required>
+
+      <label for="save-answers">
+        <input
+          id="save-answers"
+          name="save-answers"
+          type="checkbox"
+          onchange="replaceCheckbox(this)"
+        >
+        Save my answers for future applications
+      </label>
+    </form>
+    <script>
+      function replaceCheckbox(control) {
+        document.querySelector('#preferred-location').value = '';
+        const replacement = control.cloneNode(true);
+        replacement.checked = control.checked;
+        control.replaceWith(replacement);
+      }
+    </script>
+  </body>
+</html>

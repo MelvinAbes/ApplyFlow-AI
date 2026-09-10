@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Structured address application</title>
+  </head>
+  <body>
+    <main>
+      <h1>Platform Engineer</h1>
+      <form id="application" action="/application/submit">
+        <section aria-label="Personal information">
+          <h2>Personal information</h2>
+          <label for="first-name">First Name</label>
+          <input id="first-name" name="candidateFirstName" autocomplete="given-name" required>
+          <label for="phone">Phone Number</label>
+          <input id="phone" name="candidatePhone" autocomplete="tel" required>
+        </section>
+        <section aria-label="Address">
+          <h2>Address</h2>
+          <label for="street">Street Name</label>
+          <input id="street" name="candidateStreetName" required>
+          <label for="house-number">House Number</label>
+          <input id="house-number" name="candidateHouseNumber" required>
+          <label for="postal-code">ZIP / Post Code</label>
+          <input id="postal-code" name="candidatePostalCode" autocomplete="postal-code" required>
+          <label for="city">City</label>
+          <input id="city" name="candidateCity" autocomplete="address-level2" required>
+        </section>
+        <button type="submit">Submit application</button>
+      </form>
+    </main>
+  </body>
+</html>

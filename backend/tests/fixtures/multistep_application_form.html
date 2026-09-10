@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Multi-step application fixture</title></head>
+<body>
+  <form id="application-form">
+    <label for="first">First name</label><input id="first" required>
+    <button type="submit">Next</button>
+  </form>
+  <div id="success" hidden>Application received</div>
+  <script>
+    let step = 1;
+    const form = document.querySelector('form');
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (step === 1) {
+        step = 2;
+        form.innerHTML = '<label for="email">Email</label><input id="email" type="email" required><button type="submit">Submit application</button>';
+      } else {
+        form.hidden = true;
+        document.querySelector('#success').hidden = false;
+      }
+    });
+  </script>
+</body>
+</html>

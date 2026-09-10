@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>Delayed application fixture</title>
+  </head>
+  <body>
+    <main id="application-shell">
+      <h1>Bewerbung für Cloud Software Engineer (m/w/d)</h1>
+      <p>Die Anwendung wird geladen.</p>
+    </main>
+    <iframe
+      title="reCAPTCHA"
+      src="https://www.recaptcha.net/recaptcha/api2/anchor?size=invisible"
+      srcdoc=""
+      style="width: 256px; height: 60px"
+    ></iframe>
+    <script>
+      window.setTimeout(() => {
+        document.querySelector('#application-shell').insertAdjacentHTML('beforeend', `
+          <form id="delayed-application">
+            <h2>Lebenslauf</h2>
+            <label for="resume">Lade deinen Lebenslauf hoch</label>
+            <input id="resume" name="resume" type="file" required>
+            <h2>Kontaktinformationen</h2>
+            <label for="first-name">Vorname</label>
+            <input id="first-name" name="first_name" required>
+            <label for="last-name">Nachname</label>
+            <input id="last-name" name="last_name" required>
+            <button type="submit">Bewerbung einreichen</button>
+          </form>
+        `);
+      }, 500);
+    </script>
+  </body>
+</html>

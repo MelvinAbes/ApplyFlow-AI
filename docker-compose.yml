@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: job_assistant
+      POSTGRES_USER: job_assistant
+      POSTGRES_PASSWORD: local_development_only
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - job_assistant_postgres:/var/lib/postgresql/data
+
+volumes:
+  job_assistant_postgres:
